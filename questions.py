@@ -67,4 +67,4 @@ for _ in range(3):
             exit(1)
     # Se imprime un blanco al final de la pregunta
     print()
-    print(f"tu puntaje total es de {puntaje} puntos")
+print(f"tu puntaje total es de {puntaje} puntos")
