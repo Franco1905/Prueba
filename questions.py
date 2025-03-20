@@ -22,49 +22,57 @@ answers = [
     ),
     ("=", "==", "!=", "==="),
 ]
-# Índice de la respuesta correcta para cada pregunta, el el mismo orden que las preguntas
+
+
 correct_answers_index = [1, 2, 0, 3, 1]
 
-#puntaje del jugador
 
+def esCorrecto (resp,correcta):
+    if resp == correcta:
+        return True
+    else:
+        return False
+
+
+def esNum (num):
+    if num.isdigit():
+        return True
+    else:
+        return False
+
+#variable que guarda todas las preguntas con sus respuestas y con el indice de la respuesta correcta
+questions_to_ask = random.choices(list(zip(questions,answers, correct_answers_index)), k=3) 
+         
 puntaje = 0.0
-#las variables ayudan a la moldeabilidad del codigo
 bien = 1
-mal = 0.5
+mal = 0.5    
+error = 0
 
-# El usuario deberá contestar 3 preguntas
-for _ in range(3):
-    # Se selecciona una pregunta aleatoria
-    question_index = random.randint(0, len(questions) - 1)
-
-    # Se muestra la pregunta y las respuestas posibles
-    print(questions[question_index])
-    for i, answer in enumerate(answers[question_index]):
-        print(f"{i + 1}. {answer}")
-
-    # El usuario tiene 2 intentos para responder correctamente
-    for intento in range(2):
+for pregunta, respuestas, respuesta_index in questions_to_ask:
+    print(pregunta)
+    for i, respuesta in enumerate(respuestas):
+        print(f'{i+1}-{respuesta}')
+    for i in range(2):
         user_answer = input("Respuesta: ")
-        if user_answer.isdigit():
-            user_answer = int(user_answer) - 1
-            if 0<= user_answer <= 4 :
-                 # Se verifica si la respuesta es correcta
-                 if user_answer == correct_answers_index[question_index]:
-                     print("¡Correcto!")
-                     puntaje = puntaje + bien
-                     break
-                 else:
-                 # Si el usuario no responde correctamente después de 2 intentos,
-                 # se muestra la respuesta correcta
-                   print("Incorrecto. La respuesta correcta es:")
-                   print(answers[question_index][correct_answers_index[question_index]])
-                   puntaje = puntaje - mal
+        if esNum(user_answer):
+            user_answer = int(user_answer)
+            user_answer -= 1
+            if esCorrecto(user_answer,respuesta_index):
+              print("¡Correcto!")
+              puntaje = puntaje + bien
+              break
             else:
-              print("ERROR FATAL! POR FAVOR! INGRESE UN NUMERO VALIDO!!!!")
-              exit(1)
+              error += 1
+              if error == 2:
+                print("Incorrecto. La respuesta correcta es:")               
+                print(respuesta_index)
+                exit(1)
+              else: 
+                  print("Respuesta incorrecta")
+            puntaje = puntaje - mal
         else:
-            print("ERROR FATAL! POR FAVOR! INGRESE UN NUMERO VALIDO!!!!")
-            exit(1)
-    # Se imprime un blanco al final de la pregunta
+           print("ERROR FATAL! POR FAVOR! INGRESE UN NUMERO VALIDO!!!!")
+           exit(1)
+     # Se imprime un blanco al final de la pregunta
     print()
-print(f"tu puntaje total es de {puntaje} puntos")
+print(f"Tu puntaje fue de {puntaje} puntos")
