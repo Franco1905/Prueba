@@ -36,7 +36,8 @@ def esCorrecto (resp,correcta):
 
 def esNum (num):
     if num.isdigit():
-        return True
+        if '0'>= num >= '4':
+          return True
     else:
         return False
 
