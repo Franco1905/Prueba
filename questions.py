@@ -41,7 +41,7 @@ def esNum (num):
         return False
 
 #variable que guarda todas las preguntas con sus respuestas y con el indice de la respuesta correcta
-questions_to_ask = random.choices(list(zip(questions,answers, correct_answers_index)), k=3) 
+questions_to_ask = random.sample(list(zip(questions,answers, correct_answers_index)), k=3) 
          
 puntaje = 0.0
 bien = 1
@@ -64,8 +64,7 @@ for pregunta, respuestas, respuesta_index in questions_to_ask:
             else:
               error += 1
               if error == 2:
-                print("Incorrecto. La respuesta correcta es:")               
-                print(respuesta_index)
+                print(f"Incorrecto. La respuesta correcta es la numero: {respuesta_index + 1} ")      
                 exit(1)
               else: 
                   print("Respuesta incorrecta")
